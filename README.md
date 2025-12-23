@@ -1,256 +1,390 @@
-# Focus-_-Brand-
-http://localhost:7700/index.html
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<title>FOCUS | Clothing Brand</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FOCUS — Modern Street Wear</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;700;900&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary: #000000;
+            --accent: #555;
+            --bg: #ffffff;
+            --card-bg: #fdfdfd;
+            --transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
 
-<style>
-body{
-    margin:0;
-    font-family:Arial, sans-serif;
-    direction:rtl;
-    background:#f4f4f4;
-}
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
-/* هيرو */
-.hero{
-    height:100vh;
-    background:black;
-    color:white;
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    align-items:center;
-    animation:fade 2s;
-}
-.hero h1{
-    font-size:60px;
-    letter-spacing:5px;
-}
-.hero p{
-    font-size:20px;
-}
-.hero button{
-    margin-top:20px;
-    padding:15px 30px;
-    background:white;
-    border:none;
-    font-size:18px;
-    cursor:pointer;
-}
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: var(--bg);
+            color: var(--primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
 
-@keyframes fade{
-    from{opacity:0}
-    to{opacity:1}
-}
+        /* Navbar */
+        nav {
+            position: fixed;
+            top: 0; width: 100%;
+            padding: 20px 5%;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            border-bottom: 1px solid #eee;
+        }
 
-/* بانر */
-.banner{
-    background:#222;
-    color:white;
-    text-align:center;
-    padding:15px;
-    font-size:18px;
-}
+        .logo { font-weight: 900; font-size: 24px; letter-spacing: 4px; }
 
-/* أقسام */
-.section{
-    max-width:1200px;
-    margin:auto;
-    padding:40px 20px;
-}
-.section h2{
-    text-align:center;
-    margin-bottom:25px;
-}
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            background: #000;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1554568218-0f1715e72254?q=80&w=1887&auto=format&fit=crop'); /* صورة خلفية افتراضية */
+            background-size: cover;
+            background-position: center;
+        }
 
-/* منتجات */
-.products{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-    gap:20px;
-}
-.product{
-    background:white;
-    padding:15px;
-    border-radius:10px;
-    text-align:center;
-}
-.product img{
-    width:100%;
-    border-radius:10px;
-}
-select{
-    width:100%;
-    padding:8px;
-    margin:5px 0;
-}
-.product button{
-    width:100%;
-    background:black;
-    color:white;
-    border:none;
-    padding:10px;
-    margin-top:10px;
-    cursor:pointer;
-}
+        .hero h1 { 
+            font-size: clamp(50px, 10vw, 120px); 
+            font-weight: 900; 
+            letter-spacing: 20px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
 
-/* العربة */
-.cart{
-    background:white;
-    border-radius:10px;
-    padding:20px;
-}
-.cart-item{
-    display:flex;
-    justify-content:space-between;
-    margin-bottom:10px;
-}
-.cart-item button{
-    background:red;
-    color:white;
-    border:none;
-    padding:5px 10px;
-}
-.checkout{
-    width:100%;
-    padding:15px;
-    background:green;
-    color:white;
-    border:none;
-    font-size:18px;
-    cursor:pointer;
-}
-</style>
+        .hero p { font-size: 1.2rem; opacity: 0.8; letter-spacing: 2px; }
+
+        .btn-main {
+            margin-top: 30px;
+            padding: 15px 40px;
+            background: white;
+            color: black;
+            border: none;
+            font-weight: bold;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .btn-main:hover { transform: scale(1.05); background: #eee; }
+
+        /* Section Styling */
+        .section { padding: 100px 5%; max-width: 1400px; margin: auto; }
+        .section-title { text-align: center; margin-bottom: 60px; font-size: 2rem; letter-spacing: 2px; }
+
+        /* Products Grid */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .product-card {
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .img-container {
+            overflow: hidden;
+            background: #f4f4f4;
+            aspect-ratio: 3/4;
+        }
+
+        .product-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+
+        .product-card:hover img { transform: scale(1.1); }
+
+        .product-info { padding: 15px 0; text-align: center; }
+        .product-info h3 { font-weight: 400; font-size: 1.1rem; }
+        .product-info .price { font-weight: 700; color: var(--accent); margin-top: 5px; }
+
+        /* Product Detail Page */
+        #productPage {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: white;
+            z-index: 2000;
+            overflow-y: auto;
+            padding-top: 80px;
+        }
+
+        .detail-container {
+            display: flex;
+            flex-wrap: wrap;
+            max-width: 1200px;
+            margin: auto;
+            padding: 20px;
+        }
+
+        .detail-gallery { flex: 1; min-width: 300px; position: relative; }
+        .detail-info { flex: 1; min-width: 300px; padding: 40px; }
+
+        .slider { width: 100%; aspect-ratio: 3/4; position: relative; background: #eee; overflow: hidden; }
+        .slider img { 
+            position: absolute; width: 100%; height: 100%; object-fit: cover; 
+            opacity: 0; transition: opacity 0.5s ease;
+        }
+        .slider img.active { opacity: 1; }
+
+        .controls {
+            position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%);
+            display: flex; gap: 10px;
+        }
+        .controls button {
+            background: white; border: none; width: 40px; height: 40px; border-radius: 50%;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1); cursor: pointer;
+        }
+
+        .detail-info h1 { font-size: 2.5rem; margin-bottom: 10px; }
+        .detail-info select {
+            width: 100%; padding: 12px; margin: 10px 0;
+            border: 1px solid #ddd; outline: none;
+        }
+
+        .add-btn {
+            background: #000; color: white; width: 100%; padding: 18px;
+            border: none; margin-top: 20px; cursor: pointer; font-weight: bold;
+        }
+
+        /* Cart Drawer */
+        .cart-section {
+            background: #f9f9f9;
+            padding: 50px 5%;
+            border-top: 1px solid #eee;
+        }
+        .cart-container { max-width: 600px; margin: auto; background: white; padding: 30px; border-radius: 4px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+        .cart-item { display: flex; justify-content: space-between; border-bottom: 1px solid #eee; padding: 15px 0; }
+        .remove-btn { color: #ff4444; border: none; background: none; cursor: pointer; }
+
+        .whatsapp-btn {
+            background: #25D366; color: white; width: 100%; padding: 15px;
+            border: none; border-radius: 4px; font-size: 1.1rem; font-weight: bold;
+            cursor: pointer; margin-top: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .detail-info { padding: 20px; }
+            .hero h1 { letter-spacing: 10px; }
+        }
+    </style>
 </head>
-
 <body>
 
-<!-- الصفحة الرئيسية -->
-<div class="hero">
-    <h1>FOCUS</h1>
-    <p>Modern Street Wear</p>
-    <button onclick="document.getElementById('shop').scrollIntoView({behavior:'smooth'})">
-        تسوق الآن
-    </button>
-</div>
+    <nav>
+        <div class="logo">FOCUS</div>
+        <div style="cursor: pointer;" onclick="document.getElementById('cart').scrollIntoView({behavior:'smooth'})">🛒 العربة</div>
+    </nav>
 
-<!-- بانر تخفيض -->
-<div class="banner">
-🔥 خصم لفترة محدودة – اطلب الآن عبر واتساب 🔥
-</div>
+    <div id="home">
+        <section class="hero">
+            <h1>FOCUS</h1>
+            <p>STREETWEAR COLLECTION 2024</p>
+            <button class="btn-main" onclick="document.getElementById('shop').scrollIntoView({behavior:'smooth'})">اكتشف المجموعة</button>
+        </section>
 
-<!-- المتجر -->
-<div class="section" id="shop">
+        <section class="section" id="shop">
+            <h2 class="section-title">الأكثر مبيعاً</h2>
+            <div class="products-grid">
+                <div class="product-card" onclick="openProduct('hoodie')">
+                    <div class="img-container">
+                        <img src="https://images.unsplash.com/photo-1556821840-3a63f95609a7?q=80&w=1887&auto=format&fit=crop" alt="Hoodie">
+                    </div>
+                    <div class="product-info">
+                        <h3>Focus Oversized Hoodie</h3>
+                        <p class="price">600 جنيه</p>
+                    </div>
+                </div>
 
-<h2>هودي Focus</h2>
-<div class="products">
-<div class="product">
-<img src="https://images.unsplash.com/photo-1618354691373-d851c5c3a990">
-<h3>هودي Focus</h3>
-<p>600 جنيه</p>
+                <div class="product-card" onclick="openProduct('pants')">
+                    <div class="img-container">
+                        <img src="https://images.unsplash.com/photo-1542272604-787c3835535d?q=80&w=1926&auto=format&fit=crop" alt="Pants">
+                    </div>
+                    <div class="product-info">
+                        <h3>Urban Cargo Pants</h3>
+                        <p class="price">550 جنيه</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
 
-<select id="hoodieColor">
-<option>أسود</option>
-<option>أبيض</option>
-<option>رمادي</option>
-</select>
+    <div id="productPage">
+        <div class="detail-container">
+            <div class="detail-gallery">
+                <button onclick="goBack()" style="background: none; border: none; cursor: pointer; font-size: 1rem; margin-bottom: 20px;">✕ إغلاق</button>
+                <div class="slider" id="slider">
+                    </div>
+                <div class="controls">
+                    <button onclick="move(-1)">❮</button>
+                    <button onclick="move(1)">❯</button>
+                </div>
+            </div>
 
-<select id="hoodieSize">
-<option>S</option>
-<option>M</option>
-<option>L</option>
-<option>XL</option>
-</select>
+            <div class="detail-info">
+                <h1 id="name">اسم المنتج</h1>
+                <p id="price" style="font-size: 1.5rem; font-weight: bold; color: var(--accent);"></p>
+                <p style="margin: 20px 0; color: #666;">قطن مصري 100% عالي الجودة، تصميم مريح يناسب الجنسين.</p>
+                
+                <label>اللون</label>
+                <select id="color">
+                    <option>أسود ملكي</option>
+                    <option>أبيض ناصع</option>
+                    <option>رمادي دخاني</option>
+                </select>
 
-<button onclick="addToCart('هودي Focus',600,hoodieColor.value,hoodieSize.value)">
-إضافة للعربة
-</button>
-</div>
-</div>
+                <label>المقاس</label>
+                <select id="size">
+                    <option>Small</option>
+                    <option>Medium</option>
+                    <option>Large</option>
+                    <option>X-Large</option>
+                </select>
 
-<h2>سويت بانتس Focus</h2>
-<div class="products">
-<div class="product">
-<img src="https://images.unsplash.com/photo-1624378439575-d8705ad7ae80">
-<h3>سويت بانتس Focus</h3>
-<p>500 جنيه</p>
+                <button class="add-btn" onclick="addFromProduct()">إضافة إلى حقيبة التسوق</button>
+            </div>
+        </div>
+    </div>
 
-<select id="pantsColor">
-<option>أسود</option>
-<option>رمادي</option>
-</select>
+    <section class="cart-section" id="cart">
+        <div class="cart-container">
+            <h2 style="margin-bottom: 20px; text-align: center;">حقيبة التسوق</h2>
+            <div id="cartItems">
+                </div>
+            <div style="margin-top: 30px; border-top: 2px solid #000; padding-top: 20px;">
+                <div style="display: flex; justify-content: space-between; font-weight: 900; font-size: 1.3rem;">
+                    <span>الإجمالي:</span>
+                    <span id="total">0 جنيه</span>
+                </div>
+                <button class="whatsapp-btn" onclick="checkout()">إتمام الطلب عبر واتساب</button>
+            </div>
+        </div>
+    </section>
 
-<select id="pantsSize">
-<option>S</option>
-<option>M</option>
-<option>L</option>
-<option>XL</option>
-</select>
+    <script>
+        // هنا يمكنك إضافة روابط صورك الجديدة في الـ Arrays بالترتيب
+        const products = {
+            hoodie: {
+                name: "Focus Oversized Hoodie",
+                price: 600,
+                imgs: [
+                    "https://images.unsplash.com/photo-1556821840-3a63f95609a7?q=80&w=1887&auto=format&fit=crop",
+                    "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?q=80&w=1887&auto=format&fit=crop"
+                ]
+            },
+            pants: {
+                name: "Urban Cargo Pants",
+                price: 550,
+                imgs: [
+                    "https://images.unsplash.com/photo-1542272604-787c3835535d?q=80&w=1926&auto=format&fit=crop",
+                    "https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?q=80&w=1887&auto=format&fit=crop"
+                ]
+            }
+        };
 
-<button onclick="addToCart('سويت بانتس Focus',500,pantsColor.value,pantsSize.value)">
-إضافة للعربة
-</button>
-</div>
-</div>
+        let cart = JSON.parse(localStorage.getItem("focus_cart")) || [];
+        let currentProduct, currentIndex = 0;
 
-</div>
+        function openProduct(key) {
+            currentProduct = products[key];
+            document.body.style.overflow = "hidden"; // منع السكرول عند فتح المنتج
+            document.getElementById("productPage").style.display = "block";
+            document.getElementById("name").innerText = currentProduct.name;
+            document.getElementById("price").innerText = currentProduct.price + " جنيه";
 
-<!-- عربة التسوق -->
-<div class="section">
-<div class="cart">
-<h2>🛒 عربة التسوق</h2>
-<div id="cartItems"></div>
-<h3 id="total">الإجمالي: 0 جنيه</h3>
-<button class="checkout" onclick="checkout()">إتمام الشراء عبر واتساب</button>
-</div>
-</div>
+            let slider = document.getElementById("slider");
+            slider.innerHTML = "";
+            currentProduct.imgs.forEach((src, i) => {
+                slider.innerHTML += `<img src="${src}" class="${i === 0 ? 'active' : ''}">`;
+            });
+            currentIndex = 0;
+        }
 
-<script>
-let cart=[];
-let phoneNumber="201234567890"; // غير الرقم لرقمك
+        function move(dir) {
+            let imgs = document.querySelectorAll("#slider img");
+            if (imgs.length === 0) return;
+            imgs[currentIndex].classList.remove("active");
+            currentIndex = (currentIndex + dir + imgs.length) % imgs.length;
+            imgs[currentIndex].classList.add("active");
+        }
 
-function addToCart(name,price,color,size){
-cart.push({name,price,color,size});
-renderCart();
-}
+        function goBack() {
+            document.getElementById("productPage").style.display = "none";
+            document.body.style.overflow = "auto";
+        }
 
-function removeItem(i){
-cart.splice(i,1);
-renderCart();
-}
+        function addFromProduct() {
+            cart.push({
+                name: currentProduct.name,
+                price: currentProduct.price,
+                color: document.getElementById("color").value,
+                size: document.getElementById("size").value
+            });
+            save(); render();
+            goBack();
+            document.getElementById('cart').scrollIntoView({behavior:'smooth'});
+        }
 
-function renderCart(){
-let box=document.getElementById("cartItems");
-let total=0;
-box.innerHTML="";
-cart.forEach((item,i)=>{
-total+=item.price;
-box.innerHTML+=`
-<div class="cart-item">
-<span>${item.name} | لون: ${item.color} | مقاس: ${item.size}</span>
-<button onclick="removeItem(${i})">حذف</button>
-</div>`;
-});
-document.getElementById("total").innerText="الإجمالي: "+total+" جنيه";
-}
+        function save() { localStorage.setItem("focus_cart", JSON.stringify(cart)); }
 
-function checkout(){
-if(cart.length===0){
-alert("العربة فاضية");
-return;
-}
-let msg="طلب جديد من Focus:%0A";
-cart.forEach(i=>{
-msg+=`- ${i.name} | لون: ${i.color} | مقاس: ${i.size} | ${i.price} جنيه%0A`;
-});
-let total=cart.reduce((s,i)=>s+i.price,0);
-msg+=`%0Aالإجمالي: ${total} جنيه`;
-window.open(`https://wa.me/${+201010228751}?text=${msg}`);
-}
-</script>
+        function removeItem(i) {
+            cart.splice(i, 1);
+            save(); render();
+        }
 
+        function render() {
+            let box = document.getElementById("cartItems");
+            let total = 0; 
+            box.innerHTML = cart.length === 0 ? "<p style='text-align:center; color:#888;'>الحقيبة فارغة</p>" : "";
+            
+            cart.forEach((item, idx) => {
+                total += item.price;
+                box.innerHTML += `
+                    <div class="cart-item">
+                        <div>
+                            <strong>${item.name}</strong><br>
+                            <small>${item.color} | ${item.size}</small>
+                        </div>
+                        <div>
+                            <span>${item.price} ج.م</span>
+                            <button class="remove-btn" onclick="removeItem(${idx})"> (إزالة)</button>
+                        </div>
+                    </div>`;
+            });
+            document.getElementById("total").innerText = total + " جنيه";
+        }
+
+        function checkout() {
+            if (cart.length === 0) { alert("الحقيبة فارغة!"); return; }
+            let msg = "طلب جديد من FOCUS:%0A------------------%0A";
+            cart.forEach((i, idx) => {
+                msg += `${idx+1}- ${i.name} (${i.color} - ${i.size}) = ${i.price}ج%0A`;
+            });
+            msg += "------------------%0Aالإجمالي: " + document.getElementById("total").innerText;
+            window.open(`https://wa.me/201010228751?text=${msg}`);
+        }
+
+        render();
+    </script>
 </body>
-</html>
+</html>    
